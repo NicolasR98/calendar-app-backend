@@ -6,18 +6,14 @@ require('dotenv').config();
 const app = express();
 
 
-// Create a route
-// app.get('/', (req, res) => {
-//     res.json({
-//         ok: true
-//     });
-// });
+// Public directory
+app.use(express.static('public'));
+
+// Parse of a body
+app.use(express.json());
 
 // Routes
 app.use('/api/auth', require('./routes/auth'));
-
-// Public directory
-app.use(express.static('public'));
 
 
 // Listen requests
