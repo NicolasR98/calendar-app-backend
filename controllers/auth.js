@@ -1,8 +1,12 @@
 // Models
 const User = require("../models/User");
 
+// Modules
+const bcrypt = require("bcryptjs");
+
+
 const createUser = async (req, res) => {
-    const { email } = req.body;
+    const { email, password } = req.body;
 
     try {
         // Check if user exists in the db
@@ -17,6 +21,11 @@ const createUser = async (req, res) => {
 
         // If it does not exist, then save it into the db
         user = new User(req.body);
+
+        // Encrypt password
+        const salt = bcrypt.genSaltSync();
+        user.password = bcrypt.hashSync(password, salt);
+
         await user.save();
 
         res.status(201).json({
