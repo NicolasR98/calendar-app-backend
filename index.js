@@ -1,9 +1,13 @@
 const express = require('express');
+const { dbConnection } = require('./database/config');
 require('dotenv').config();
 
 
 // Create express server
 const app = express();
+
+// Databases
+dbConnection();
 
 
 // Public directory
