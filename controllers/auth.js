@@ -4,6 +4,9 @@ const User = require("../models/User");
 // Modules
 const bcrypt = require("bcryptjs");
 
+// Helpers
+const { generateJWT } = require("../helpers/jwt");
+
 
 const createUser = async (req, res) => {
     const { email, password } = req.body;
@@ -28,10 +31,14 @@ const createUser = async (req, res) => {
 
         await user.save();
 
+        // Generate JWT
+        const token = await generateJWT(user.id, user.name);
+
         res.status(201).json({
             ok: true,
             uid: user.id,
             name: user.name,
+            token,
         });
 
     } catch (error) {
@@ -67,10 +74,14 @@ const loginUser = async (req, res) => {
             });
         };
 
+        // Generate JWT
+        const token = await generateJWT(user.id, user.name);
+
         return res.json({
             ok: true,
             uid: user.id,
-            name: user.name
+            name: user.name,
+            token,
         });
 
     } catch (error) {
