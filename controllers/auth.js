@@ -60,7 +60,7 @@ const loginUser = async (req, res) => {
         if (!user) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Incorrect email',
+                msg: 'Incorrect email or password',
             });
         };
 
@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
         if (!validPassword) {
             return res.status(400).json({
                 ok: false,
-                msg: 'Incorrect password'
+                msg: 'Incorrect email or password'
             });
         };
 
@@ -103,6 +103,8 @@ const renewToken = async (req, res) => {
         ok: true,
         msg: 'renew',
         token,
+        uid,
+        name,
     });
 };
 
